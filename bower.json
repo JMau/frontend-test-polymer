@@ -1,0 +1,16 @@
+{
+  "name": "frontend-test-polymer",
+  "description": "&#34;app todo list&#34;",
+  "main": "index.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "ib-list": "https://github.com/JMau/lista-ib.git#1.0.0",
+    "ib-item": "https://github.com/JMau/ib-item.git#1.0.1",
+    "ib-input": "https://github.com/JMau/ib-input.git#1.0.0",
+    "ib-icon-button": "https://github.com/JMau/ib-icon-button.git#1.0.0"
+  },
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+  }
+}

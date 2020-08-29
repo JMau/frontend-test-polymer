@@ -1,0 +1,143 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/ib-list/ib-list.html">
+<link rel="import" href="../../bower_components/ib-input/ib-input.html">
+<link rel="import" href="../../bower_components/ib-item/ib-item.html">
+<link rel="import" href="../../bower_components/ib-icon-button/ib-icon-button.html">
+
+<dom-module id="frontend-test-polymer-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        background: radial-gradient(circle at top left,#a9e235 0,#4dff91 50%,#04e5f0 100%);
+        height: 100vh;
+      }
+      .main-container {
+        width: 60%;
+        margin: auto;
+        padding-top: 1.5rem;
+      }
+      .header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 2rem 0 2.5rem 0;
+        color: white;
+      }
+      .header .logo {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 1rem;
+      }
+      .add-container{
+        margin-bottom: 1rem;
+      }
+      ib-icon-button {
+        background-color: teal;
+        --ib-icon-button-button-width: 100%;
+      }
+      ib-icon-button span{
+        width: 100%;
+        height: 3rem;
+        background-color: teal;
+        line-height: 3rem ;
+      }
+    </style>
+    
+
+    <div class="main-container">
+      <div class="header">
+        <img class="logo" src="../../src/assets/ico-logo.png" alt="logo iron bit">
+        <strong>Frontend Test</strong>
+      </div>
+      <div class="add-container">
+        <ib-item>
+          <div slot="content">
+            <ib-input value="{{value}}" place-holder="{{placeHolder}}"></ib-input>
+          </div>
+          <div slot="sufix">
+            <ib-icon-button on-click="addItem"><span slot="tag">Agregar</span></ib-icon-button>
+          </div>
+        </ib-item>
+      </div>
+      <div class="list-container">
+        <ib-list
+          items="{{items}}"
+          default-item="[[defaultItem]]"
+        ></ib-list>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class FrontendTestPolymerApp extends Polymer.Element {
+      static get is() { return 'frontend-test-polymer-app'; }
+      static get properties() {
+        return {
+          items: {
+            type: Array,
+            notify: true,
+            observer: '_modifyItems'
+          },
+          defaultItem: {
+            type: String,
+            value: 'No hat ToDos, tomate un café!'
+          },
+          value: {
+            type: String,
+            value: ''
+          },
+          placeHolder: {
+            type: String,
+            computed: 'getPlaceHolder(items)'
+          }
+        };
+      }
+
+      constructor(){
+        super();
+        let i = localStorage.getItem('items');
+        if(i != null){
+          let itms = JSON.parse(i);
+          this.items = itms.slice();
+        }else{
+          this.items = [];
+        }
+      }
+
+      ready(){
+        super.ready();
+      }
+
+      getPlaceHolder(items) {
+        let placeholder = ":)";
+        if(this.items.length == 0) {
+          placeholder = 'Agrega una nueva tarea';
+        }
+        return placeholder;
+      }
+
+      addItem(e){
+        this.items.push({activity: this.value});
+        let a = this.items.slice();
+        this.items = a.slice();
+        this.value = '';
+      }
+
+      _modifyItems(items){
+        let itms = JSON.stringify(items);
+        localStorage.setItem('items', itms);
+      }
+
+     
+    }
+
+    window.customElements.define(FrontendTestPolymerApp.is, FrontendTestPolymerApp);
+  </script>
+</dom-module>

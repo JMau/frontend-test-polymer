@@ -1,0 +1,7 @@
+{
+  "name": "frontend-test-polymer",
+  "short_name": "frontend-test-polymer",
+  "description": "&#34;app todo list&#34;",
+  "start_url": "/",
+  "display": "standalone"
+}
